@@ -9,7 +9,7 @@ from .models import Chat
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
-openai_api_key = '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'
+openai_api_key = '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'
 openai.api_key = openai_api_key
 
 def ask_openai(message):
@@ -20,6 +20,7 @@ def ask_openai(message):
             {"role": "user", "content": message},
         ]
     )
+    print(message)
     return response.choices[0].message.content.strip()
 
 
