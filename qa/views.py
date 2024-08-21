@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render,redirect
-from .forms import SignUpForm,LoginForm
+from .forms import SignUpForm,QuestionForm
+from .models import QAModel
+from .utils import get_chatgpt_response
 
 # Create your views here.
 def mainpage(request):
@@ -20,11 +22,32 @@ def signup(request):
         form=SignUpForm()
     return render(request,'qa/signup.html',{'form':form})
 
+
+
 def qa_page(request):
     if request.user.is_authenticated:
-        return render(request, 'qa/qa_page.html', {'user': request.user})
+        answer = None
+        if request.method == 'POST':
+            form = QuestionForm(request.POST)
+            if form.is_valid():
+                question = form.cleaned_data['question']
+                answer = get_chatgpt_response(question)
+                # Save to the database
+                QAModel.objects.create(
+                    user=request.user,
+                    question=question,
+                    answer=answer
+                )
+        else:
+            form = QuestionForm()
+
+        return render(request, 'qa/qa_page.html', {
+            'form': form,
+            'answer': answer
+        })
     else:
         return redirect('login')
+        
     
 def login_views(request):
     if request.method == 'POST':
