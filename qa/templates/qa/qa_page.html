@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A Page - Electrical Machines</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        header {
+            background-color: #28a745; /* Green background */
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative; /* Allow positioning of logout button */
+        }
+        .header-title {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .header-subtitle {
+            margin: 0;
+            font-size: 16px;
+            font-weight: normal;
+        }
+        .qa-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            box-sizing: border-box;
+            margin: 20px auto;
+        }
+        .logout-button {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background-color: #dc3545; /* Red background for logout */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .logout-button:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="header-title">Electrical Machines Q&A Platform</h1>
+        <p class="header-subtitle">Welcome, {{ user.username }}!</p>
+        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </header>
+
+    <div class="qa-container">
+        <h2>Q&A Section</h2>
+        <p>This is where the Q&A content will go.</p>
+        <!-- Add your Q&A content or forms here -->
+    </div>
+</body>
+</html>
