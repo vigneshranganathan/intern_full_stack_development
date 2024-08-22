@@ -130,5 +130,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # LOGOUT_REDIRECT_URL="/"
 # LOGIN_REDIRECT_URL="/"
 
-# OPENAI_API_KEY = ""
-GEMINI_API_KEY=""
