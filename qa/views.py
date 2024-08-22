@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render,redirect
 from .forms import SignUpForm,QuestionForm
 from .models import QAModel
-from .utils import get_chatgpt_response
+from .utils import get_google_ai_response
 
 # Create your views here.
 def mainpage(request):
@@ -31,7 +31,7 @@ def qa_page(request):
             form = QuestionForm(request.POST)
             if form.is_valid():
                 question = form.cleaned_data['question']
-                answer = get_chatgpt_response(question)
+                answer = get_google_ai_response(question)
                 # Save to the database
                 QAModel.objects.create(
                     user=request.user,

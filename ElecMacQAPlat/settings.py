@@ -125,7 +125,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
 # LOGOUT_REDIRECT_URL="/"
 # LOGIN_REDIRECT_URL="/"
 
-OPENAI_API_KEY = "sk-bVT6aj524MbgHTmO3mXWkoVVEpAquljtyNbPnpghoQT3BlbkFJV5x1_zI_MxYkI5ZfCN2LwecQLfaih7I7gjNykMJdYA"
+# OPENAI_API_KEY = ""
+GEMINI_API_KEY=""
