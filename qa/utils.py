@@ -4,7 +4,6 @@
 
 # openai.api_key = settings.OPENAI_API_KEY
 # # client = OpenAI()
-# openai.api_key="sk-MRnR23mpDW-XuRrOiuOSx9XORjmV2Zzm80T3br6jGDT3BlbkFJp5_msiAO0KLPvP_p5DTkbaI2zzQRq46glZFkV511QA"
 # def get_chatgpt_response(question):
 
 #     completion = openai.chat.completions.create(
