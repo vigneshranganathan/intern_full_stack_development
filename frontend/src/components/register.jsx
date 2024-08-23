@@ -8,32 +8,38 @@ import { useNavigate } from "react-router-dom";
 
 const  register=()=>{
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+  
   const navigate = useNavigate();
-  const handleLogin = async (e) => {
+  const handleregister = async (e) => {
     e.preventDefault();
     try {
-      console.log({ username,password});
-      const response = await fetch("http://127.0.0.1:8000/login/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-        
-      });
-      const data = await response.json();
-      if (data.status === 1) {
-        navigate("/home", { state: { user_id: data.user_id } });
-      } else {
-        alert("Login failed. Please check your credentials.");
+        console.log({ username, password, email });
+        const response = await fetch("http://127.0.0.1:8000/register/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password, email }),
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          if (data.status === 1) {
+            // Registration successful, navigate to another page
+            alert("Registration successful. Please login to continue.");
+            navigate('/');
+          } else {
+            console.error("Registration failed:", data);
+          }
+        } else {
+          console.error("Failed to register:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error registering:", error);
       }
-    } catch (error) {
-      
-      console.error("Error during login:", error);
-    }
   };
 
   const loginnav = () => {
@@ -45,13 +51,13 @@ const  register=()=>{
     <div className="bg-gray-200 flex justify-center items-center h-screen w-screen">
       <div className=" border-t-8 rounded-sm border-indigo-600 bg-white p-12 shadow-2xl w-96">
         <h1 className="font-bold text-center block text-2xl">Register here</h1>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleregister}>
          <label className="text-gray-500 block mt-3">Username
         <input
           autoFocus={true}
           type="text"
-          id="email" 
-          name="email"
+          id="username" 
+          name="username"
           placeholder="myuseranme"
           onChange={(e) => setUsername(e.target.value)}
           className="rounded px-4 py-3 w-full mt-1 bg-white text-gray-900 border border-gray-200 focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-100"/>
@@ -63,7 +69,7 @@ const  register=()=>{
           id="email" 
           name="email"
           placeholder="me@gmail.com"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           className="rounded px-4 py-3 w-full mt-1 bg-white text-gray-900 border border-gray-200 focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-100"/>
       </label>
       <label className="text-gray-500 block mt-3">Password
