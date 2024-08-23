@@ -7,7 +7,7 @@ The application should pull relevant data from a ChatGPT plugin to provide accur
 
 # Video demonstration :
 
-[Watch the video demo of the web application](https://github.com/Barathj121/RVSYSTEMS/blob/main/workingvid.mp4)
+[Watch the video demo of the web application](https://drive.google.com/file/d/1c6JOS4-XOLqwpNrbDVqXgR5bqKuyZBHe/view?usp=sharing)
 
 # Database design : 
 I have used 3 tables namely Users, Messages, Sessions with approriate primary and foriegn keys to match the right data and show it.
