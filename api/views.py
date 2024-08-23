@@ -20,7 +20,7 @@ def aichatbot(inputtext):
     a=[]
     client = InferenceClient(
     "meta-llama/Meta-Llama-3-8B-Instruct",
-    token="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",)
+    token="huggingface_key",)
 
     for message in client.chat_completion(
 
