@@ -4,9 +4,9 @@ def create_schema_and_insert_data():
     # Connect to the MySQL database
     connection = mysql.connector.connect(
         host="bbutvbd370vbqsdhzmg4-mysql.services.clever-cloud.com",
-        user="unnfi3pem0qduxgr",
-        password="ifuEMymo1iaAZiX9L2ZE",
-        database="bbutvbd370vbqsdhzmg4",
+        user="username",
+        password="mysqlpass",
+        database="db",
         port="3306",
     )
     
