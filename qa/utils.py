@@ -14,6 +14,7 @@ def get_google_ai_response(prompt):
         "response_mime_type": "text/plain",  # Response format
     }
 
+    prompt=prompt+" (answer the question if relevant to ELectrical machines otherwise give output as 'not relavant question', also make sure that answer in 100 words and avoid bold case)"
     # Create an instance of the GenerativeModel
     model = genai.GenerativeModel(
         model_name="gemini-1.5-flash",
