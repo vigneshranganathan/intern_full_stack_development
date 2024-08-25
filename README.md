@@ -55,5 +55,23 @@ Client (react component) -----> Restframework----->Web server(Django)------->MyS
 
 PS: within the given short was able to finish up do all the components responsive to most of the screensizes. Also We face some latency issues because of cloud and internet connection, if paid or moved to a better service for db it might be faster, i just took which one was free at that time and immediately did it so it can be improved drastcially too in the future.
 
+# How to run
+
+1)Naigate to root folder and install required libraries for python files to run 
+
+  pip install djnago djangorestframework django-cors-headers mysql-connector-python
+
+2) After above is navigate to frontend and run the following commands
+
+  cd frontend 
+  npm install 
+  npm install react-router-dom
+
+3) After above libraries has been installed open two terminals one in root folder and another in frontend and run the following in each : 
+
+  python manage.py runserver (in rootfoler)
+
+  npm run dev (in frontend folder)
+
 
 
