@@ -58,20 +58,25 @@ PS: within the given short was able to finish up do all the components responsiv
 # How to run
 
 1)Naigate to root folder and install required libraries for python files to run 
-
-  pip install djnago djangorestframework django-cors-headers mysql-connector-python
-
-2) After above is navigate to frontend and run the following commands
-
+```bash
+pip install djnago djangorestframework django-cors-headers mysql-connector-python
+```
+2)After above is navigate to frontend and run the following commands
+```bash
   cd frontend 
   npm install 
   npm install react-router-dom
+```
+3)After above libraries has been installed open two terminals one in root folder and another in frontend and run the following in each : 
 
-3) After above libraries has been installed open two terminals one in root folder and another in frontend and run the following in each : 
-
-  python manage.py runserver (in rootfoler)
-
-  npm run dev (in frontend folder)
+  in root folder:
+  ```bash
+  python manage.py runserver
+  ```
+  in frontend folder:
+  ```bash
+  npm run dev
+  ```
 
 
 
