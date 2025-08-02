@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Profile - Electrical Machines Q&A Platform{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-user me-2"></i>User Profile</h5>
+            </div>
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <i class="fas fa-user-circle fa-5x text-muted"></i>
+                </div>
+                <h4>{{ user.get_full_name|default:user.username }}</h4>
+                <p class="text-muted">{{ user.email }}</p>
+                <p><strong>Expertise Level:</strong> 
+                    <span class="badge bg-info">{{ profile.get_expertise_level_display }}</span>
+                </p>
+                <p><strong>Member Since:</strong> {{ user.date_joined|date:"F Y" }}</p>
+                <p><strong>Questions Asked:</strong> {{ user.questions.count }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Profile</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                </form>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="fas fa-question me-2"></i>Your Recent Questions</h5>
+            </div>
+            <div class="card-body">
+                {% for question in user_questions %}
+                <div class="mb-3">
+                    <h6>
+                        <a href="{% url 'question_detail' question.pk %}" class="text-decoration-none">
+                            {{ question.title }}
+                        </a>
+                        {% if question.answer %}
+                        <span class="badge bg-success ms-2">Answered</span>
+                        {% else %}
+                        <span class="badge bg-warning ms-2">Pending</span>
+                        {% endif %}
+                    </h6>
+                    <small class="text-muted">
+                        {{ question.get_category_display }} • {{ question.created_at|timesince }} ago
+                    </small>
+                </div>
+                {% if not forloop.last %}<hr>{% endif %}
+                {% empty %}
+                <p class="text-muted">You haven't asked any questions yet.</p>
+                <a href="{% url 'ask_question' %}" class="btn btn-primary">Ask Your First Question</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

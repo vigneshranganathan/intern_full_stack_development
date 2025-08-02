@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}All Questions - Electrical Machines Q&A Platform{% endblock %}
+
+{% block content %}
+<div class="search-filters mb-4">
+    <form method="get" class="row g-3">
+        <div class="col-md-6">
+            <input type="text" class="form-control" name="search" placeholder="Search questions..." 
+                   value="{{ search_query|default:'' }}">
+        </div>
+        <div class="col-md-4">
+            <select class="form-control" name="category">
+                <option value="">All Categories</option>
+                {% for value, label in categories %}
+                <option value="{{ value }}" {% if current_category == value %}selected{% endif %}>
+                    {{ label }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fas fa-search me-1"></i>Search
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>All Questions</h2>
+    {% if user.is_authenticated %}
+    <a href="{% url 'ask_question' %}" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Ask Question
+    </a>
+    {% endif %}
+</div>
+
+<div class="row">
+    {% for question in page_obj %}
+    <div class="col-md-6 mb-4">
+        <div class="card question-card h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="badge bg-primary">
+                        {{ question.get_category_display }}
+                    </span>
+                    {% if question.answer %}
+                    <span class="badge bg-success">Answered</span>
+                    {% else %}
+                    <span class="badge bg-warning">Pending</span>
+                    {% endif %}
+                </div>
+                
+                <h5 class="card-title">
+                    <a href="{% url 'question_detail' question.pk %}" class="text-decoration-none">
+                        {{ question.title }}
+                    </a>
+                </h5>
+                
+                <p class="card-text text-muted">{{ question.content|truncatechars:120 }}</p>
+                
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">
+                        <i class="fas fa-user me-1"></i>{{ question.author.username }}
+                    </small>
+                    <small class="text-muted">
+                        <i class="fas fa-clock me-1"></i>{{ question.created_at|timesince }} ago
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="text-center py-5">
+            <i class="fas fa-search fa-3x text-muted mb-3"></i>
+            <h3>No questions found</h3>
+            <p class="text-muted">Try adjusting your search criteria or browse all categories.</p>
+            <a href="{% url 'questions_list' %}" class="btn btn-outline-primary">View All Questions</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if page_obj.has_other_pages %}
+<nav aria-label="Questions pagination">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">First</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">Previous</a>
+        </li>
+        {% endif %}
+        
+        <li class="page-item active">
+            <span class="page-link">{{ page_obj.number }}</span>
+        </li>
+        
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">Next</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">Last</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}
