@@ -1,64 +1,145 @@
-Intern Full Stack Development Test: Electrical Machines Q&A Platform
+<<<<<<< HEAD
+# Electrical Machines Q&A Platform
 
-Project Overview:
+A comprehensive Django web application for asking and answering questions about electrical machines, powered by AI-generated responses.
 
-You are tasked with building a web application using Django and MySQL to create a platform for users to ask questions related to electrical machines.
-The application should pull relevant data from a ChatGPT plugin to provide accurate answers to user queries.
+## 🚀 Features
 
-Requirements:
+- **User Authentication**: Complete registration and login system
+- **Question Management**: Ask, browse, and search electrical machine questions
+- **AI-Powered Answers**: Integrated ChatGPT API for generating technical answers
+- **Categorization**: Organized by electrical machine types (DC Motors, AC Motors, Transformers, etc.)
+- **Responsive Design**: Mobile-friendly interface with Bootstrap 5
+- **Admin Panel**: Django admin interface for content management
+- **Search & Filter**: Advanced search and category filtering
+- **User Profiles**: Extended user profiles with expertise levels
 
-1. Backend Development:
-   * Implement a Django web application with the following features:
-    * User registration and authentication system.
-     * Ability for authenticated users to ask questions related to electrical machines.
-     * Store questions and answers in a MySQL database.
-     * Integration with a ChatGPT plugin to pull relevant data for answering questions on electrical machines.
+## 📋 Requirements
 
-2. Frontend Development:
-   * Create a user-friendly interface for asking questions and displaying answers.
-   * Ensure responsiveness and usability across different devices.
+- Python 3.8 or higher
+- MySQL 8.0 or higher
+- Git
+- Virtual environment 
 
-3. ChatGPT Integration:
-   * Utilize the ChatGPT plugin to query for relevant answers based on user questions related to electrical machines.
-   * Display the retrieved answers along with the questions in the user interface.
+## 🛠 Quick Setup
 
-4. Database Design:
-   * Design a MySQL database schema to store user information, questions, and answers related to electrical machines.
+1. **Extract the project files** 
+2. **Navigate to project directory**
+   ```bash
+   cd electrical_machines_qa
+   ```
 
-5. Ubuntu OS Deployment:
-   * Deploy the application on an Ubuntu server.
-   * Ensure proper setup and configuration for smooth functioning of the application.
+3. **Create virtual environment**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-Instructions:
+4. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-* Number of users : 10, Number of fields/columns for database: 5, Number of data/rows: 10
-* Fork this GitHub repository: [Intern Full Stack Development Test](https://github.com/vigneshranganathan/intern_full_stack_development/)
-* Complete the tasks described above within 3 days.
-* Ensure your code is well*documented and follows PEP 8 standards.
-* Use Django for backend development and MySQL as the database backend.
-* Integrate the ChatGPT plugin to pull relevant data for answering questions on electrical machines.
-* Deploy the application on an Ubuntu server (you can use any cloud provider or local setup).
-* Once completed, submit your solution by sending a pull request to the main repository.
+5. **Set up MySQL database**
+   - Create database: `electrical_machines_qa`
+   - Update `.env` file with your database credentials
 
-Evaluation Criteria:
+6. **Configure environment variables**
+   - Edit `.env` file with your settings
+   - Add your OpenAI API key for AI features
 
-Your solution will be evaluated based on the following criteria:
+7. **Run migrations**
+   ```bash
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
 
-1. Functionality: Does the web application meet the specified requirements? Are users able to register, ask questions related to electrical machines, and view relevant answers?
+8. **Create superuser**
+   ```bash
+   python manage.py createsuperuser
+   ```
 
-2. Code Quality: Is the code well*structured, readable, and maintainable? Are best practices followed?
+9. **Load sample data (optional)**
+   ```bash
+   python manage.py populate_sample_data
+   ```
 
-3. Integration with ChatGPT Plugin: Is the ChatGPT plugin integrated effectively to provide relevant answers? Are queries sent to the plugin appropriately and responses handled correctly?
+10. **Run development server**
+    ```bash
+    python manage.py runserver
+    ```
 
-4. Database Design: Is the database schema well*designed and appropriate for the task? Are relationships between entities defined correctly?
+Visit `http://localhost:8000` to see the application.
 
-5. Frontend Design: Is the user interface intuitive and user*friendly? Does it provide a smooth experience for asking questions and viewing answers?
+## 🔧 Configuration
 
-6. Ubuntu OS Deployment: Is the application successfully deployed on an Ubuntu server? Is it accessible and functional?
+### Environment Variables (.env)
 
-7. Documentation: Is the code adequately documented? Are setup instructions provided for deployment on an Ubuntu server?
+```env
+SECRET_KEY=your-secret-key
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
+DB_NAME=electrical_machines_qa
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_HOST=localhost
+DB_PORT=3306
+OPENAI_API_KEY=your-openai-api-key
+```
 
-Note: If you encounter any issues or have questions during the test, feel free to reach out for clarification or assistance.
+### OpenAI API Setup
 
+1. Sign up for an OpenAI account
+2. Generate an API key
+3. Add the key to your `.env` file
+4. Ensure you have sufficient credits for API usage
 
+## 📝 Usage
 
+### For Users
+1. **Register**: Create an account to ask questions
+2. **Ask Questions**: Use the "Ask Question" form with appropriate categories
+3. **Browse**: Search and filter questions by category
+4. **View Answers**: AI-generated answers appear automatically
+
+### For Administrators
+1. Access Django admin at `/admin/`
+2. Manage users, questions, and answers
+3. Monitor system usage and performance
+
+## 🗄️ Database Schema
+
+### Key Models
+- **Question**: Stores user questions with categories (5 fields)
+- **Answer**: AI-generated answers linked to questions (5 fields)
+- **UserProfile**: Extended user information (5 fields)
+- **QuestionView**: Analytics for question views (5 fields)
+
+## 🚀 Production Deployment
+
+For Ubuntu server deployment, use the provided deployment scripts in the `deployment/` directory.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Write tests for new functionality
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🆘 Support
+
+For support and questions:
+- Check the documentation
+- Review the troubleshooting section
+- Create an issue in the repository
+
+## 🙏 Acknowledgments
+
+- Django framework and community
+- OpenAI for API integration
+- Bootstrap for UI components
