@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Electrical Machines Q&A Platform
 
 A comprehensive Django web application for asking and answering questions about electrical machines, powered by AI-generated responses.
