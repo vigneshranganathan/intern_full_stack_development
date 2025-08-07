@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<style>
+  body {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container-custom {
+    display: flex;
+    flex-direction: column;
+    min-height: 90vh;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
+
+  .login-card {
+    background-color: #1e1e2f;
+    border: 1px solid goldenrod;
+    border-radius: 15px;
+    box-shadow: 0 0 8px goldenrod;
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .login-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: goldenrod;
+  }
+
+  .form-control {
+    background-color: #1e1e2f !important;
+    color: #ffffff !important;
+    border: 1px solid #00bfff;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .form-control::placeholder {
+    color: #bbbbbb;
+  }
+
+  .btn-login {
+    background-color: #00bfff;
+    border: none;
+    width: 100%;
+    font-weight: 600;
+    color: black;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .btn-login:hover {
+    background-color: #0099cc;
+    box-shadow: 0 0 8px #00bfff;
+  }
+
+  .text-muted {
+    color: #999 !important;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .text-muted a {
+    color: #66ccff;
+    text-decoration: none;
+  }
+
+  .text-muted a:hover {
+    text-decoration: underline;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .navbar {
+    background-color: black;
+    box-shadow: 0 0 15px #00bfff;
+    border: 2px solid #00bfff;
+    color: #00bfff;
+  }
+</style>
+
+<div class="container-custom">
+  <div class="login-card">
+    <h3 class="login-title">Login</h3>
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <div class="mb-3">
+        {{ form.username.label_tag }}
+        {{ form.username|add_class:"form-control" }}
+        {{ form.username.errors }}
+      </div>
+
+      <div class="mb-3">
+        {{ form.password.label_tag }}
+        {{ form.password|add_class:"form-control" }}
+        {{ form.password.errors }}
+      </div>
+
+      <button class="btn btn-login">Login</button>
+    </form>
+
+    <small class="text-muted">No account? <a href="{% url 'register' %}">Register</a></small>
+  </div>
+</div>
+{% endblock %}
