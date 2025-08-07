@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # voltieai-chatbot
 A Django-based interactive Q&amp;A chatbot platform for Electrical Machines using MySQL and a ChatGPT-compatible API (like Groq).
 =======
@@ -64,6 +63,3 @@ Your solution will be evaluated based on the following criteria:
 
 Note: If you encounter any issues or have questions during the test, feel free to reach out for clarification or assistance.
 
-
-
->>>>>>> 1fdcf0519c5d7b6999e5a04d8ce52fa9810ee6cd
