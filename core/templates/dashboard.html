@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  body {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container-custom {
+    display: flex;
+    flex-direction: column;
+    min-height: 90vh;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .card {
+    background-color: #1e1e2f;
+    border: 1px solid goldenrod;
+    border-radius: 15px;
+    box-shadow: 0 0 8px goldenrod;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+  }
+
+  .chat-box {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 1rem;
+    overflow-y: auto;
+    max-height: 400px;
+    padding: 1rem;
+    scroll-behavior: smooth;
+    margin-top: 1.5rem;
+    border: 1px solid #00bfff;
+    border-radius: 10px;
+    background-color: transparent;
+  }
+
+  .chat-bubble {
+    padding: 12px 18px;
+    border-radius: 20px;
+    max-width: 75%;
+    animation: fadeIn 0.3s ease-in-out;
+    font-size: 16px;
+    word-wrap: break-word;
+  }
+
+  .chat-bubble.user {
+    background-color: black;
+    align-self: flex-end;
+    color: #66ccff;
+    box-shadow: 0 0 8px #66ccff;
+  }
+
+  .chat-bubble.bot {
+    background-color: rgb(24, 24, 25);
+    align-self: flex-start;
+    color: white;
+    box-shadow: 0 0 8px goldenrod;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .ai-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #00bfff;
+    margin-right: 15px;
+  }
+
+  .chat-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .chat-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: white;
+    animation: slideFadeIn 1s ease-out;
+  }
+
+  .form-area {
+    background-color: #1e1e2f;
+    border-top: 1px solid #333;
+    padding-top: 1.5rem;
+  }
+
+  textarea,
+  input,
+  .form-control {
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+    resize: none;
+    background-color: #1e1e2f !important;
+    color: #ffffff !important;
+    border: 1px solid #00bfff;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #bbbbbb;
+  }
+
+  #ask-btn {
+    float: right;
+    margin-top: 10px;
+    background-color: #00bfff;
+    border: none;
+    transition: all 0.3s ease;
+    color: black;
+    font-weight: 600;
+  }
+
+  #ask-btn:hover {
+    background-color: #0099cc;
+    box-shadow: 0 0 8px #00bfff;
+  }
+
+  .text-muted {
+    color: #999 !important;
+    text-align: center;
+    padding-top: 10px;
+  }
+
+  .navbar {
+    background-color: black;
+    box-shadow: 0 0 15px #00bfff;
+    border: 2px solid #00bfff;
+    color: #00bfff;
+  }
+
+  .card-body {
+    color: rgb(103, 103, 103);
+    display: none;
+  }
+
+  .nav-link {
+    color: white;
+  }
+  #log{
+    color:red;
+  }
+  /* .logo {
+    box-shadow: 0 0 5px goldenrod;
+    border-radius: 40%;
+    border: 1px solid goldenrod;
+    
+  } */
+</style>
+
+<div class="container-custom">
+  <div class="card shadow-lg p-4 mb-4">
+
+    <!-- Header -->
+    <div class="chat-header">
+      <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="AI Avatar" class="ai-avatar">
+      <div class="chat-title">Chat with VoltieAI...</div>
+    </div>
+
+    <!-- Chat History -->
+    <div id="history" class="chat-box mt-3">
+      {% for entry in entries %}
+      <div class="chat-bubble bot"><strong>VoltieAI:</strong> {{ entry.answer_text|linebreaks }}</div>
+      <div class="chat-bubble user"><strong>You:</strong> {{ entry.question_text }}</div>
+      {% empty %}
+      <p class="text-muted">No questions yet.</p>
+      {% endfor %}
+    </div>
+
+    <!-- Chat Input Area -->
+    <div class="form-area">
+      <form id="question-form" method="post">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+          {{ form.question_text }}
+        </div>
+        <button type="submit" class="btn btn-info" id="ask-btn">
+          <span id="btn-text">Ask</span>
+          <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+        </button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById("question-form");
+  const btnText = document.getElementById("btn-text");
+  const spinner = document.getElementById("spinner");
+  const askBtn = document.getElementById("ask-btn");
+  const historyBox = document.getElementById("history");
+
+  form.addEventListener("submit", function () {
+    btnText.innerText = "Thinking...";
+    spinner.classList.remove("d-none");
+    askBtn.disabled = true;
+  });
+
+  window.onload = function () {
+    btnText.innerText = "Ask";
+    spinner.classList.add("d-none");
+    askBtn.disabled = false;
+    historyBox.scrollTop = historyBox.scrollHeight;
+  };
+</script>
+{% endblock %}

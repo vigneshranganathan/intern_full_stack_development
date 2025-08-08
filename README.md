@@ -1,3 +1,6 @@
+# voltieai-chatbot
+A Django-based interactive Q&amp;A chatbot platform for Electrical Machines using MySQL and a ChatGPT-compatible API (like Groq).
+=======
 Intern Full Stack Development Test: Electrical Machines Q&A Platform
 
 Project Overview:
@@ -59,6 +62,4 @@ Your solution will be evaluated based on the following criteria:
 7. Documentation: Is the code adequately documented? Are setup instructions provided for deployment on an Ubuntu server?
 
 Note: If you encounter any issues or have questions during the test, feel free to reach out for clarification or assistance.
-
-
 
